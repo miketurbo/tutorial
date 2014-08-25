@@ -35,6 +35,8 @@ var cursors;
 
 var stars;
 var score = 0;
+var counter_time = 30;
+var counter_text = 0;
 var scoreText;
 
 function create() {
@@ -106,7 +108,19 @@ function create() {
     }
 
     //  The score
-    scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+    scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
+
+    counter_text = game.add.text(160, 16, 'Time: ' + counter_time, { fontSize: '32px', fill: '#000' });
+
+    var counter = game.time.create(false);
+
+    //  Set a TimerEvent to occur after 2 seconds
+    counter.loop(1000, updateCounter, this);
+
+    //  Start the timer running - this is important!
+    //  It won't start automatically, allowing you to hook it to button events and the like.
+    counter.start();
+ 
 
     //  Our controls.
     cursors = game.input.keyboard.createCursorKeys();
@@ -132,6 +146,14 @@ function create() {
     
     };
     
+}
+
+function updateCounter() {
+
+    counter_time--;
+
+    counter_text.setText('Time: ' + counter_time);
+
 }
 
 function update() {
